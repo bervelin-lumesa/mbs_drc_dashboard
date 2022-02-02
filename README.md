@@ -1,7 +1,6 @@
 # MBS-RDC : [MALARIA BEHAVIOR SURVEY](https://malariabehaviorsurvey.org/)
 
-L'enquête comportementale liée au paludisme est une étude transversale auprès des ménages sur les comportements liés au paludisme et les facteurs qui les motivent ou les inhibent. L'enquête utilise une méthodologie théorique et standardisée pour produire des données pour informer sur le paludisme social et comportemental
-modifie les interventions.
+L'enquête comportementale liée au paludisme est une étude transversale auprès des ménages sur les comportements liés au paludisme et les facteurs qui les motivent ou les inhibent.
 
 Contient les codes R utilisés pour créer le tableau de bord pour l'enquête comportementale liée au paludisme en République Démocratique du Congo en 2021.
 Ce tableau de bord servait à suivre l'évolution de la collecte de données dans les 15 provinces du pays où la collecte de données se déroulait.
