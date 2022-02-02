@@ -8,10 +8,10 @@ Ce tableau de bord servait à suivre l'évolution de la collecte de données dan
 
 Pour créer ce tableau de bord, le logiciel R et son IDE RStudio ont été utilisés, avec les packages :
 
-library(flexdashboard)
-library(haven)
-library(foreign)
-library(leaflet)
-library(tidyverse)
-library(kableExtra)
-library(knitr)
+- library(flexdashboard)
+- library(haven)
+- library(foreign)
+- library(leaflet)
+- library(tidyverse)
+- library(kableExtra)
+- library(knitr)
