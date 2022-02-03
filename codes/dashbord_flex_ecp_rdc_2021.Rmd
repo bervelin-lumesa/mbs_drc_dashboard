@@ -1,0 +1,374 @@
+---
+title: "Tableau de bord : Enquête Comportementale sur le Paludisme en RDC"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    source_code: embed
+    #runtime : shiny 
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+```
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+
+# data and libraries
+
+source("data_and_lib.R")
+
+# functions
+
+source("function.R")
+
+# options
+font_size = 15
+
+```
+
+Statistiques
+============================================
+
+Column {data-width=400}
+-----------------------------------------------------------------------
+
+### Grappe(s) touchée(s) sur `r echantillon_grappe` : `r floor(total_grappe_touchee() / echantillon_grappe * 100)`%
+
+```{r}
+valueBox(total_grappe_touchee(), icon="fa-map")
+```
+
+
+
+### Ménage(s) visité(s) sur `r echantillon_menage` :  `r floor(nombre_menage_visite(HQ_C) / echantillon_menage * 100)`%
+
+```{r}
+#nombre_unite <- nombre_unite(HQ_C)
+valueBox(nombre_menage_visite(HQ_C), icon="fa-home")
+```
+
+
+### Femme(s) interviewée(s) sur `r echantillon_femme` :  `r floor(nombre_femme_interviewee(WQ) / echantillon_femme * 100)`%
+
+```{r}
+#nombre_unite1 <- nombre_unite1(WQ)
+valueBox(nombre_femme_interviewee(WQ), icon="fa-user")
+```
+
+
+### Homme(s) interviewé(s) sur `r echantillon_homme` :  `r floor(nombre_homme_interviewe(MQ) / echantillon_homme * 100)`%
+
+```{r}
+#nombre_unite2 <- nombre_unite2(MQ)
+valueBox(nombre_homme_interviewe(MQ), icon="fa-user")
+```
+
+
+### Répondants individuels (Femmes + Hommes) interviewés sur `r echantillon_individuel` :  `r floor((nombre_femme_interviewee(WQ) + nombre_homme_interviewe(MQ))/echantillon_individuel * 100)`%
+
+```{r}
+#nombre_unite3 <- nombre_unite4(WQ) + nombre_unite5(MQ)
+valueBox((nombre_femme_interviewee(WQ) + nombre_homme_interviewe(MQ)), icon="fa-user")
+```
+
+### Apropos
+
+#### Auteur : [Bervelin Lumesa](mailto:bervelin@begis-congo.net) / Data manager
+
+#### Données collectées par : [Begis Congo](https://www.begis-congo.net)
+
+#### Date de mise à jour : `r Sys.time()`
+
+Column {.tabset}
+-----------------------------------------------------------------------
+
+### Informations sur les grappes
+*****
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
+info_grappe() %>%
+  kable() %>% 
+  kable_styling(bootstrap_options = c("striped", "hover", "responsive"), 
+                font_size = font_size)
+
+```
+Notes : 
+
+- <span style="text-align:italic">_Grappes touchées : grappes dans lesquelles au moins une interview ménage est réalisée._</span>
+- <span style="text-align:italic">_Grappes prevues : grappes qui doivent être couvertes._</span>
+
+
+
+### Informations sur l'enquête ménage
+
+```{r}
+info_menage(HQ_C) %>%
+  kable() %>% 
+  kable_styling(bootstrap_options = c("striped", "hover", "responsive"), 
+                font_size = font_size) %>%
+  row_spec(c(16), bold = T, col = "darkblue")
+```
+
+Notes : 
+
+- <span style="text-align:italic">_Ménages visités : ménages visités et dont le questionnaire-ménage a été enrégistré peu importe le résultat de l'entretien._</span>
+- <span style="text-align:italic">_Menages avec enquête terminée : ménages visités et dont le questionnaire-ménage est completement terminé._</span>
+- <span style="text-align:italic">_Menages avec enquête partielle : ménages visités et dont le questionnaire-ménage est terminé partiellement / pas arrivé à la fin._</span>
+- <span style="text-align:italic">_Menages avec refus : ménages ayant réfusé de participer à l'étude._</span>
+
+
+### Informations sur l'enquête femme
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
+info_femme(HQ_L, WQ) %>%
+  knitr::kable() %>% 
+          kable_styling(bootstrap_options = c("striped", "hover", "responsive"), 
+                        font_size = font_size) %>%
+          row_spec(c(16), bold = T, col = "darkblue")
+```
+
+Notes : 
+
+- <span style="text-align:italic">_Femmes éligibles : Femmes âgées de 18-49 ans résidant dans le ménage sélectionné._</span>
+- <span style="text-align:italic">_Femmes interviewées : Femmes interviewées et dont le questionnaire-femme a été enrégistré peu importe le résultat de l'entretien._</span>
+- <span style="text-align:italic">_Femmes avec enquete terminee : Femmes interviewées et dont le questionnaire-femme est completement terminé.._</span>
+- <span style="text-align:italic">_Femmes avec enquête partielle : Femmes interviwee et dont le questionnaire-femme est terminé partiellement / pas arrivé à la fin._</span>
+- <span style="text-align:italic">_Femmes avec refus : Femmes ayant réfusé de participer à l'étude._</span>
+
+### Informations sur l'enquête homme
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
+info_homme(HQ_L, MQ) %>%
+  knitr::kable() %>% 
+          kable_styling(bootstrap_options = c("striped", "hover", "responsive"), 
+                        font_size = font_size) %>%
+          row_spec(c(16), bold = T, col = "darkblue")
+```
+
+Notes : 
+
+- <span style="text-align:italic">_Hommes éligibles : Hommes âgés de 18-59 ans résidant dans le ménage sélectionné._</span>
+- <span style="text-align:italic">_Hommes interviewés : Hommes interviewés et dont le questionnaire-homme a été enrégistré peu importe le résultat de l'entretien._</span>
+- <span style="text-align:italic">_Hommes avec enquete terminee : Hommes interviewées et dont le questionnaire-homme est completement terminé.._</span>
+- <span style="text-align:italic">_Hommes avec enquête partielle : Hommes interviwe et dont le questionnaire-homme est terminé partiellement / pas arrivé à la fin._</span>
+- <span style="text-align:italic">_Hommes avec refus : Hommes ayant réfusé de participer à l'étude._</span>
+
+Carte
+============================================
+
+### Distribution spatiale des ménages
+```{r echo=FALSE, fig.height=7, fig.width=9.5, message=FALSE, warning=FALSE, paged.print=FALSE}
+
+# création du vecteur de provinces
+Q <- c("Kinshasa", "Kongo Central", "Kwilu", "Equateur", "Sud Ubangi", "Mongala",
+       "Tshopo", "Bas-Uele", "Sud-Kivu", "Maniema", "Tanganyika", "Haut-Katanga",
+       "Sankuru", "Lomami", "Kasaï Central")
+
+radius      = 10
+fill        = T
+fillOpacity = 0.
+opacity     = 1
+
+# exécution de la fonction leaflet
+  leaflet() %>%
+    addTiles() %>%
+    addCircleMarkers(
+      lng         = DATA_10$LONGITUDE_RECUP,
+      lat         = DATA_10$LATITUDE_RECUP,
+      color       = DATA_10$COULEUR,
+      radius      = radius,
+      fill        = fill,
+      fillOpacity = fillOpacity,
+      opacity     = opacity, 
+      popup       = paste("Enquêteur : ", DATA_10$HQ011_NOM_AGENT, "br/", "Grappe : ", DATA_10$HQ006_NOM_GRAPPE),
+      group       = Q[1]
+    ) %>%
+    addCircleMarkers(
+      lng         = DATA_20$LONGITUDE_RECUP,
+      lat         = DATA_20$LATITUDE_RECUP,
+      color       = DATA_20$COULEUR,
+      radius      = radius,
+      fill        = fill,
+      fillOpacity = fillOpacity,
+      opacity     = opacity, 
+      popup       = paste("Enquêteur : ",DATA_20$HQ011_NOM_AGENT, " - ", "Grappe : ", DATA_20$HQ006_NOM_GRAPPE),
+      group       = Q[2]
+    ) %>%
+    addCircleMarkers(
+      lng         = DATA_32$LONGITUDE_RECUP,
+      lat         = DATA_32$LATITUDE_RECUP,
+      color       = DATA_32$COULEUR,
+      radius      = radius,
+      fill        = fill,
+      fillOpacity = fillOpacity,
+      opacity     = opacity, 
+      popup       = paste("Enquêteur : ",DATA_32$HQ011_NOM_AGENT, " - ", "Grappe : ", DATA_32$HQ006_NOM_GRAPPE),
+      group       = Q[3]
+    ) %>%
+    addCircleMarkers(
+      lng         = DATA_41$LONGITUDE_RECUP,
+      lat         = DATA_41$LATITUDE_RECUP,
+      color       = DATA_41$COULEUR,
+      radius      = radius,
+      fill        = fill,
+      fillOpacity = fillOpacity,
+      opacity     = opacity, 
+      popup       = paste("Enquêteur : ",DATA_41$HQ011_NOM_AGENT, " - ", "Grappe : ", DATA_41$HQ006_NOM_GRAPPE),
+      group       = Q[4]
+    ) %>%
+    addCircleMarkers(
+      lng         = DATA_42$LONGITUDE_RECUP,
+      lat         = DATA_42$LATITUDE_RECUP,
+      color       = DATA_42$COULEUR,
+      radius      = radius,
+      fill        = fill,
+      fillOpacity = fillOpacity,
+      opacity     = opacity, 
+      popup       = paste("Enquêteur : ",DATA_42$HQ011_NOM_AGENT, " - ", "Grappe : ", DATA_42$HQ006_NOM_GRAPPE),
+      group       = Q[5]
+    ) %>%
+    addCircleMarkers(
+      lng         = DATA_44$LONGITUDE_RECUP,
+      lat         = DATA_44$LATITUDE_RECUP,
+      color       = DATA_44$COULEUR,
+      radius      = radius,
+      fill        = fill,
+      fillOpacity = fillOpacity,
+      opacity     = opacity, 
+      popup       = paste("Enquêteur : ",DATA_44$HQ011_NOM_AGENT, " - ", "Grappe : ", DATA_44$HQ006_NOM_GRAPPE),
+      group       = Q[6]
+    ) %>%
+    addCircleMarkers(
+      lng         = DATA_51$LONGITUDE_RECUP,
+      lat         = DATA_51$LATITUDE_RECUP,
+      color       = DATA_51$COULEUR,
+      radius      = radius,
+      fill        = fill,
+      fillOpacity = fillOpacity,
+      opacity     = opacity, 
+      popup       = paste("Enquêteur : ",DATA_51$HQ011_NOM_AGENT, " - ", "Grappe : ", DATA_51$HQ006_NOM_GRAPPE),
+      group       = Q[7]
+    ) %>%
+    addCircleMarkers(
+      lng         = DATA_52$LONGITUDE_RECUP,
+      lat         = DATA_52$LATITUDE_RECUP,
+      color       = DATA_52$COULEUR,
+      radius      = radius,
+      fill        = fill,
+      fillOpacity = fillOpacity,
+      opacity     = opacity, 
+      popup       = paste("Enquêteur : ",DATA_52$HQ011_NOM_AGENT, " - ", "Grappe : ", DATA_52$HQ006_NOM_GRAPPE),
+      group       = Q[8]
+    ) %>%
+    addCircleMarkers(
+      lng         = DATA_62$LONGITUDE_RECUP,
+      lat         = DATA_62$LATITUDE_RECUP,
+      color       = DATA_62$COULEUR,
+      radius      = radius,
+      fill        = fill,
+      fillOpacity = fillOpacity,
+      opacity     = opacity, 
+      popup       = paste("Enquêteur : ",DATA_62$HQ011_NOM_AGENT, " - ", "Grappe : ", DATA_62$HQ006_NOM_GRAPPE),
+      group       = Q[9]
+    ) %>%
+    addCircleMarkers(
+      lng         = DATA_63$LONGITUDE_RECUP,
+      lat         = DATA_63$LATITUDE_RECUP,
+      color       = DATA_63$COULEUR,
+      radius      = radius,
+      fill        = fill,
+      fillOpacity = fillOpacity,
+      opacity     = opacity, 
+      popup       = paste("Enquêteur : ",DATA_63$HQ011_NOM_AGENT, " - ", "Grappe : ", DATA_63$HQ006_NOM_GRAPPE),
+      group       = Q[10]
+    ) %>%
+    addCircleMarkers(
+      lng         = DATA_73$LONGITUDE_RECUP,
+      lat         = DATA_73$LATITUDE_RECUP,
+      color       = DATA_73$COULEUR,
+      radius      = radius,
+      fill        = fill,
+      fillOpacity = fillOpacity,
+      opacity     = opacity, 
+      popup       = paste("Enquêteur : ",DATA_73$HQ011_NOM_AGENT, " - ", "Grappe : ", DATA_73$HQ006_NOM_GRAPPE),
+      group       = Q[11]
+    ) %>%
+    addCircleMarkers(
+      lng         = DATA_74$LONGITUDE_RECUP,
+      lat         = DATA_74$LATITUDE_RECUP,
+      color       = DATA_74$COULEUR,
+      radius      = radius,
+      fill        = fill,
+      fillOpacity = fillOpacity,
+      opacity     = opacity, 
+      popup       = paste("Enquêteur : ",DATA_74$HQ011_NOM_AGENT, " - ", "Grappe : ", DATA_74$HQ006_NOM_GRAPPE),
+      group       = Q[12]
+    ) %>%
+    addCircleMarkers(
+      lng         = DATA_82$LONGITUDE_RECUP,
+      lat         = DATA_82$LATITUDE_RECUP,
+      color       = DATA_82$COULEUR,
+      radius      = radius,
+      fill        = fill,
+      fillOpacity = fillOpacity,
+      opacity     = opacity, 
+      popup       = paste("Enquêteur : ",DATA_82$HQ011_NOM_AGENT, " - ", "Grappe : ", DATA_82$HQ006_NOM_GRAPPE),
+      group       = Q[13]
+    ) %>%
+    addCircleMarkers(
+      lng         = DATA_83$LONGITUDE_RECUP,
+      lat         = DATA_83$LATITUDE_RECUP,
+      color       = DATA_83$COULEUR,
+      radius      = radius,
+      fill        = fill,
+      fillOpacity = fillOpacity,
+      opacity     = opacity, 
+      popup       = paste("Enquêteur : ",DATA_83$HQ011_NOM_AGENT, " - ", "Grappe : ", DATA_83$HQ006_NOM_GRAPPE),
+      group       = Q[14]
+    ) %>%
+    addCircleMarkers(
+      lng         = DATA_92$LONGITUDE_RECUP,
+      lat         = DATA_92$LATITUDE_RECUP,
+      color       = DATA_92$COULEUR,
+      radius      = radius,
+      fill        = fill,
+      fillOpacity = fillOpacity,
+      opacity     = opacity, 
+      popup       = paste("Enquêteur : ",DATA_92$HQ011_NOM_AGENT, " - ", "Grappe : ", DATA_92$HQ006_NOM_GRAPPE),
+      group       = Q[15]
+    ) %>%
+    addLegend(title = "STATUT DE L'INTERVIEW", position = c("bottomleft"),
+            colors = c("green","orange", "grey", "red", "black"),
+            labels = c("TERMINE COMPLETEMENT",
+                       "TERMINE PARTIELLEMENT",
+                       "PAS A LA MAISON / REPORTE / EMPECHE",
+                       "REFUSE",
+                       "na"), 
+            opacity = 0.8) %>%
+  # Add layers control to display or hide different elements 
+  addLayersControl(
+    options = layersControlOptions(collapsed = F),
+    overlayGroups = Q
+  )
+
+```
+
+
+```{r eval=FALSE, include=FALSE}
+ if (dir.exists(paste0("../output/", Sys.Date())) == 0){ # si le dossier n'existe pas
+   dir.create(paste0("../output/", Sys.Date())) # créez en un 
+   
+   path <- paste0("../output/", Sys.Date(), "/flex_dashbord_ecp_rdc_", Sys.Date(),".html")
+   file.rename("dashbord_flex_ecp_rdc_2021.html", path)
+ } 
+
+  path <- paste0("../output/", Sys.Date(), "/flex_dashbord_ecp_rdc_", Sys.Date(),".html")
+  file.rename("dashbord_flex_ecp_rdc_2021.html", path)
+
+```
+
+
