@@ -14,3 +14,5 @@ Pour créer ce tableau de bord, le logiciel R et son IDE RStudio ont été utili
 - library(tidyverse)
 - library(kableExtra)
 - library(knitr)
+
+![Image](https://github.com/bervelin-lumesa/mbs_drc_dashboard/blob/main/dashboard.JPG)
