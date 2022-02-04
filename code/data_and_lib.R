@@ -32,7 +32,7 @@ HQ_C <- read.spss("../data/HQ_C.sav", to.data.frame = T)
 names(HQ_C)[2] <- "Province"
 HQ_C$Province <- as.character(HQ_C$Province)
 
-HQ_L <- read.spss("../data/HQ_L.sav", to.data.frame = T,)
+HQ_L <- read.spss("../data/HQ_L.sav", to.data.frame = T)
 names(HQ_L)[2] <- "Province"
 HQ_L$Province <- as.character(HQ_L$Province)
 
