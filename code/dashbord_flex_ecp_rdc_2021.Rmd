@@ -32,7 +32,7 @@ font_size = 15
 Statistiques
 ============================================
 
-Column {data-width=400}
+Column {data-width=300}
 -----------------------------------------------------------------------
 
 ### Grappe(s) touchée(s) sur `r echantillon_grappe` : `r floor(total_grappe_touchee() / echantillon_grappe * 100)`%
@@ -163,6 +163,9 @@ Carte
 ### Distribution spatiale des ménages
 ```{r echo=FALSE, fig.height=7, fig.width=9.5, message=FALSE, warning=FALSE, paged.print=FALSE}
 
+# load shapefile
+load("../shape/sh.Rdata")
+
 # création du vecteur de provinces
 Q <- c("Kinshasa", "Kongo Central", "Kwilu", "Equateur", "Sud Ubangi", "Mongala",
        "Tshopo", "Bas-Uele", "Sud-Kivu", "Maniema", "Tanganyika", "Haut-Katanga",
@@ -176,6 +179,7 @@ opacity     = 1
 # exécution de la fonction leaflet
   leaflet() %>%
     addTiles() %>%
+    addPolygons(data = sh, color = "blue", fill = "", weight = 1) %>%
     addCircleMarkers(
       lng         = DATA_10$LONGITUDE_RECUP,
       lat         = DATA_10$LATITUDE_RECUP,

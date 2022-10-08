@@ -8,7 +8,7 @@
 # Linkedin : https://linkedin/in/bervelin-lumesa       #
 ########################################################
 
-# THIS FILE INCLUDE FUNCTIONS
+# THIS FILE INCLUDES FUNCTIONS
 
 #========================= functions for valueboxes =================================
 # number of households visited
@@ -82,6 +82,13 @@ info_grappe <- function(){
 
 # function to build the table for household infos
 info_menage <- function(data){
+  
+# same as : 
+#  data %>%
+#    filter(!is.na(data$HQ012_RESULTAT)) %>%
+#    select(Province) %>%
+#    magrittr::use_series(Province) %>%
+#    table()
   
   menage_approche <- table(data[which(!is.na(data$HQ012_RESULTAT)), 'Province']) 
     
@@ -192,6 +199,7 @@ info_homme <- function(data_liste, data_homme){
   return(profil)
   
 }
+
 
 
 

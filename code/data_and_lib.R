@@ -26,13 +26,13 @@ echantillon_homme = 1670
 echantillon_individuel = echantillon_femme + echantillon_homme
 echantillon_grappe = 249
 
-#========================= loading data =================================
+#========================= importing data =================================
 
 HQ_C <- read.spss("../data/HQ_C.sav", to.data.frame = T)
 names(HQ_C)[2] <- "Province"
 HQ_C$Province <- as.character(HQ_C$Province)
 
-HQ_L <- read.spss("../data/HQ_L.sav", to.data.frame = T)
+HQ_L <- read.spss("../data/HQ_L.sav", to.data.frame = T,)
 names(HQ_L)[2] <- "Province"
 HQ_L$Province <- as.character(HQ_L$Province)
 
